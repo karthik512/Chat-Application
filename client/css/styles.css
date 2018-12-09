@@ -1,0 +1,114 @@
+html, body {
+    padding: 0px;
+    margin: 0px;
+    font-family: "Arial","Helvetica",sans-serif;
+  }
+  #loading_state {
+    position: absolute;
+    top: 45%;
+    left: 0px;
+    width: 100%;
+    font-size: 20px;
+    text-align: center;
+  }
+  #callState {
+    display: none;
+  }
+  #local_video {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 160px;
+    height: 120px;
+    background: #333333;
+  }
+  #remote_video {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 1024px;
+    height: 768px;
+    background: #999999;
+  }
+  #chat {
+    position: absolute;
+    top: 0px;
+    left: 1024px;
+    height: 768px;
+    width: 300px;
+    background: #CCCCCC;
+  }
+  #messages {
+    overflow: auto;
+    position: absolute;
+    top: 20px;
+    left: 0px;
+    height: 733px;
+    width: 295px;
+    padding-top: 15px;
+    padding-left: 5px;
+    font-size: 14px;
+  }
+  #message_input {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    height: 20px;
+    width: 280px;
+    padding-left: 5px;
+    background: #FFFFFF;
+  }
+  #file_sharing {
+    position: absolute;
+    top: 140px;
+    left: 10px;
+    height: 628px;
+    width: 160px;
+  }
+  #file_input {
+    display: none;
+  }
+  #file_add {
+    position: absolute;
+    padding: 0px;
+    height: 120px;
+    width: 160px;
+    text-align: center;
+  }
+  #file_list {
+    overflow: auto;
+    position: absolute;
+    padding: 0px;
+    top: 130px;
+    height: 488px;
+    width: 180px;
+  }
+  .file {
+    width: 160px;
+    height: 120px;
+    padding: 0px;
+    padding-bottom: 10px;
+    margin: 0px;
+  }
+  .file_img {
+    width: 160px;
+    height: 120px;
+  }
+  .file_progress {
+    color: #333333;
+    font-family: "Helvetica","Arial",sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+    position: relative;
+    text-align: center;
+    top: -80px;
+    width: 160px;
+  }
+  #file_img_src {
+    display: none;
+  }
+  #file_thumbnail_canvas {
+    display: none;
+    width: 160px;
+    height: 120px;
+  }
