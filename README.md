@@ -10,7 +10,7 @@ A Chat Application using WebRTC in Node.js
 </ul>
 
 
-<stong>Pending</strong>
+<strong>Pending</strong>
 <ul>
   <li>Text Chat</li>
   <li>File Sharing</li>
