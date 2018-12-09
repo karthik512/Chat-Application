@@ -11,6 +11,9 @@ let port = 9000;
 let rtcClients = [];
 var rtcDiscussions = {};
 
+const VIDEO = 1;
+const AUDIO = 2;
+
 hbs.registerPartials(process.cwd() + '/client/views/partials');
 app.set('view-engine', 'hbs');
 
@@ -18,16 +21,25 @@ var httpServer = app.listen(port, () => {
     logger.info(`Server started successfully at port ${port}`);
 });
 
-app.get('/', (req, res) => {
-    res.render(process.cwd() + '/client/views/main.hbs', {}, (err, html) => {
-        if(err) {
-            logger.error(err);
-        } else {
-            // logger.info(html);
-            res.send(html);
-        }
-    });
+hbs.registerHelper('equals', (a, b) => {
+    logger.info(` Equals helper - a :: ${a} - b : ${b}`);
+    if(a == b) {
+        return true;
+    }
+    return false;
 });
+
+app.get('/', (req, res) => {
+    return res.redirect('/video');
+});
+
+app.get('/video', (req, res) => {
+    res.render(process.cwd() + '/client/views/main.hbs', {type: VIDEO});
+});
+
+app.get('/audio', (req, res) => {
+    res.render(process.cwd() + '/client/views/main.hbs', {type: AUDIO});
+})
 
 app.get('*.(js|css)', (req, res) => {
     let pathName = req.path;
@@ -57,26 +69,20 @@ webSocketServer.on('request', (request) => {
             } catch(e) { logger.error(` Excep while parsing message :: ${e}`); }
             
             if(signal && signal.token != undefined) {
-                logger.info(` Signal Token :: ${signal.token}`);
-                logger.info(` Signal Type :: ${signal.type}`);
                 try {
                     if(signal.type == 'join') {
                         if(rtcDiscussions[signal.token] === undefined) {
-                            logger.info('Creating Empty object for token ...');
                             rtcDiscussions[signal.token] = {};
                         }
                         rtcDiscussions[signal.token][connection.id] = true;
                     } else {
                         logger.info(' Going to Iterate peers...');
                         Object.keys(rtcDiscussions[signal.token]).forEach((connectionID) => {
-                            logger.info(` ConnectionToken :: ${signal.token} - ConnectionID :: ${connectionID}`);
                             if(connectionID != connection.id) {
-                                logger.info(' Sending Message to other peer... ');
                                 rtcClients[connectionID].send(message.utf8Data, logger.error);
                             }
                         });
                     }
-                    logger.info(` RTCDiscusstions :: ${JSON.stringify(rtcDiscussions)}`);
                 } catch(e) { logger.error(` Exception :: ${e}`); }
             } else { logger.info(' Omitting signal '); }
         }

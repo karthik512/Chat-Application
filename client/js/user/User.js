@@ -59,11 +59,13 @@ export class User
     }
 
     initiateChat(options, elementID) {
+        this.chatOptions = options;
         this.rtcAdapter.userMedia(options, (localStream) => {
             logger.info('New Local Stream added');
-            this.rtcAdapter.connectStream(localStream, CommonUtil.docid(elementID));
-
-            CommonUtil.docid(elementID).muted = true;
+            if(elementID) {
+                this.rtcAdapter.connectStream(localStream, CommonUtil.docid(elementID));
+                CommonUtil.docid(elementID).muted = true;
+            }
 
             this.peerConnection.addStream(localStream);
 
@@ -73,7 +75,11 @@ export class User
 
     onAddStream(event) {
         logger.info(' New Remote stream added');
-        this.rtcAdapter.connectStream(event.stream, CommonUtil.docid('remote_video'));
+        let remoteID = 'remote_audio';
+        if(this.chatOptions.video == true) {
+            remoteID = 'remote_video';
+        }
+        this.rtcAdapter.connectStream(event.stream, CommonUtil.docid(remoteID));
     }
 
     getName() {

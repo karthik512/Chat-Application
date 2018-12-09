@@ -4,17 +4,25 @@
         <meta charset="utf-8">
         <title>Chat Application</title>
         <link href="/client/css/styles.css" rel="stylesheet" type="text/css">
+        
+        <script type="text/javascript">
+            var chatType = '{{type}}';
+        </script>
         <script src="/client/js/chat.js" type="module"></script>
     </head>
     <body>
-        <div id="video__chat">
-            {{> video}}
-        </div>
-        {{!-- <div id="audio_chat">
-            {{> audio}}
-        </div>
+        {{#if (equals type 1)}}
+            <div id="video__chat">
+                {{> video}}
+            </div>
+        {{/if}}
+        {{#if (equals type 2)}}
+            <div id="audio_chat">
+                {{> audio}}
+            </div>
+        {{/if}}
         <div id="text_chat">
             {{> textchat}}
-        </div> --}}
+        </div>
     </body>
 </html>
