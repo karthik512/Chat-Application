@@ -7,12 +7,12 @@ A Chat Application using WebRTC in Node.js
 <ul>
   <li>Video Call</li>
   <li>Audio Call</li>
+  <li>Text Chat</li>
 </ul>
 
 
 <strong>Pending</strong>
 <ul>
-  <li>Text Chat</li>
   <li>File Sharing</li>
   <li>End Chat option</li>
   <li>User signup, authentication and chat invitations</li>
