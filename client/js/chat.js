@@ -1,6 +1,7 @@
 import {getRTCAdapter} from './rtc/RTCAdapterFactory.js';
 import {Logger} from '/client/js/common/log.js';
 import {getUser} from './user/UserFactory.js';
+import { CommonUtil } from '/client/js/common/CommonUtil.js';
 
 const logger = new Logger();
 
@@ -20,6 +21,16 @@ try {
     } else if(chatType == 2) {
         options.video = false;
         user.initiateChat(options,'');
+    }
+
+    CommonUtil.docid('message_input').onkeydown = (event) => {
+        if(event.keyCode == 13) {
+            let messageElement = CommonUtil.docid('message_input');
+            let message = messageElement.value;
+            user.sendMessage(message);
+            messageElement.value = '';
+            messageElement.focus();
+        }
     }
 } catch(e) {
     logger.error(e);

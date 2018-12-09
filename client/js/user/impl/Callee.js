@@ -11,7 +11,35 @@ export class Callee extends User
 
         this.signalingServer.onopen = this.onSignalingOpen.bind(this);
         this.signalingServer.onmessage = this.onCalleMessage.bind(this);
+
+        this.peerConnection.ondatachannel = this.onChannelReceive.bind(this);
     }
+
+    sendMessage(message) {
+        logger.info(` sendMessage Called with message :: ${message}`);
+        this.receiveChannel.send(message);
+        this.addChatMessage('You', message);
+    }
+
+    onChannelReceive(event) {
+        this.receiveChannel = event.channel;
+        this.receiveChannel.onopen = this.onReceiveChannelStateChange.bind(this);
+        this.receiveChannel.onclose = this.onReceiveChannelStateChange.bind(this);
+        this.receiveChannel.onmessage = this.onMessageReceived.bind(this);
+    }
+
+    onReceiveChannelStateChange(event) {
+        logger.info(' onReceiveChannelStateChange Called...');
+        if(this.receiveChannel) {
+            let state = this.receiveChannel.readyState;
+
+            if(state === 'open') {
+                logger.info(' ReceiveChannel is open...');
+            } else {
+                logger.info(' ReceiveChannel is closed...');
+            }
+        }
+    }    
 
     onSignalingOpen() {
         this.send({

@@ -31,6 +31,17 @@ export class User
         // }
     }
 
+    addChatMessage(userName, message) {
+        let messages = CommonUtil.docid('messages');
+        messages.innerHTML = userName + ': ' + message + '<br>\n' + messages.innerHTML;
+    }
+
+    onMessageReceived(event) {
+        logger.info(' onMessageReceived Called...');
+        let message = event.data;
+        this.addChatMessage('User', message);
+    }
+
     send(messageObj) {
         logger.info(` Messsage :: ${JSON.stringify(messageObj)}`);
         this.signalingServer.send(JSON.stringify(messageObj));
